@@ -6,9 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Confession;
-use App\Models\Attendance;
-use App\Models\Grade;
 
 class User extends Authenticatable
 {
@@ -48,8 +45,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function confession() { return $this->hasOne(Confession::class); }
-    public function attendance() { return $this->hasOne(Attendance::class); }
-    public function grade() { return $this->hasOne(Grade::class); }
 }

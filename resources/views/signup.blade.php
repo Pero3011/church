@@ -22,10 +22,6 @@
         <form method="POST" action="{{ url('/signup') }}">
             @csrf
             <div>
-                <label>الاسم:</label>
-                <input type="text" name="name" value="{{ old('name') }}" required>
-            </div>
-            <div>
                 <label>السنة الدراسيه:</label>
                 <select name="year" required>
                     <option value="">اختر السنة</option>
@@ -33,6 +29,11 @@
                     <option value="الأولى" {{ old('year') == 'الأولى' ? 'selected' : '' }}>الأولى</option>
                     <option value="الثانية" {{ old('year') == 'الثانية' ? 'selected' : '' }}>الثانية</option>
                 </select>
+            </div>
+            
+            <div>
+                <label>الاسم:</label>
+                <input type="text" name="name" value="{{ old('name') }}" required>
             </div>
             <div>
                 <label>الرقم التعريفي:</label>

@@ -25,8 +25,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($users))
+                        @if(auth()->check() && optional(auth()->user())->year == "خادم"&& isset($users))
                             @foreach($users as $user)
+                                @continue($user->id == auth()->user()->id)
                                 <tr>
                                     <td data-label="الاسم">{{ $user->name }}</td>
                                     <td data-label="الاعتراف 1">{{ $user->confession1 ?? '0' }}</td>
@@ -44,7 +45,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @elseif(isset($user))
+                        @elseif(auth()->check() && isset($user))
                             <tr>
                                 <td data-label="الاسم">{{ $user->name }}</td>
                                 <td data-label="الاعتراف 1">{{ $user->confession1 ?? '0' }}</td>
@@ -75,7 +76,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($users))
+                        @if(auth()->check() && optional(auth()->user())->year == "خادم" && isset($users))
                             @foreach($users as $user)
                                 @php
                                     $total_grade = round(
@@ -84,8 +85,14 @@
                                     $subject1 = $user->subject1 ?? 0;
                                     $subject2 = $user->subject2 ?? 0;
                                     $subject3 = $user->subject3 ?? 0;
-                                    $passed = !($total_grade < 80 || $subject1 < 60 || $subject2 < 60 || $subject3 < 60);
+
+                                    $confession1 = $user->confession1 ?? 0;
+                                    $confession2 = $user->confession2 ?? 0;
+                                    $confession3 = $user->confession3 ?? 0;
+
+                                    $passed = !($total_grade < 80 || $subject1 < 60 || $subject2 < 60 || $subject3 < 60 || $confession1 < 2 || $confession2 < 2 || $confession3 < 2);
                                 @endphp
+                                @continue($user->id == auth()->user()->id)
                                 <tr>
                                     <td data-label="الاسم">{{ $user->name }}</td>
                                     <td data-label="الماده 1">{{ $subject1 }}</td>
@@ -100,7 +107,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @elseif(isset($user))
+                        @elseif(auth()->check() && isset($user))
                             @php
                                 $total_grade = round(
                                     (($user->attendance1 ?? 0) + ($user->attendance2 ?? 0) + ($user->attendance3 ?? 0)) / 90 * 100

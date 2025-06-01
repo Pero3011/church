@@ -58,7 +58,6 @@
                         <li class="active"><a href="#">الرئيسية</a></li>
                     </ul>
                 </div>
-                <!-- Logo on the left -->
                 <div class="navbar-logo">
                     <img src="{{ asset('images/white logo.png') }}" alt="شعار الكنيسة" style="height:75px; width:auto;">
                 </div>
