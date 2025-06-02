@@ -37,7 +37,7 @@
                             </h4>
                         </div>
                     @endif
-                                            @auth
+                        @if(auth()->check() || session('admin_name') || session('user_name'))
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                                     @csrf
@@ -95,9 +95,9 @@
                     <div class="service-icon">
                         <i class="fa-solid fa-mountain-sun" aria-hidden="true"></i>
                     </div>
-                    <h3 class="service-title">الخلوات والمؤتمرات</h3>
+                    <h3 class="service-title">جدول العمل السنوي</h3>
                     <p class="service-description">
-                        هنا يمكن معرفة مواعيد الخلوات والمؤتمرات والاطلاع على الملفات الخاصة ببرنامج الخلوة أو المؤتمر والمنشورات الخاصة بهم
+                        هنا يمكن معرفة مواعيد الخدمه و اماكنها و مواعيد النشاطات الخاصه بالخدمه
                     </p>
                     <a href="{{ route('schedule') }}" class="service-link">
                         المزيد من التفاصيل

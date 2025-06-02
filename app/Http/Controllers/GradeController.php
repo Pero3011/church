@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
+
+use function Laravel\Prompts\alert;
 
 class GradeController extends Controller
 {
     public function index()
     {
-        // If a user is logged in and is "خادم", show all users
-        if (Auth::check() && Auth::user()->year == "خادم") {
-            $users = \App\Models\User::all();
+        // If an admin is logged in (via session), show all users' info
+        if (session('admin_name')) {
+            $users = User::all();
             return view('grade', compact('users'));
         }
 

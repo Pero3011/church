@@ -9,10 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-    public function up()
+    public function up(): void
     {
-
         Schema::table('users', function (Blueprint $table) {
             $table->integer('confession1')->nullable();
             $table->integer('confession2')->nullable();
@@ -21,7 +19,6 @@ return new class extends Migration
             $table->integer('attendance2')->nullable();
             $table->integer('attendance3')->nullable();
             $table->integer('total_grade')->nullable();
-            // Add more subjects as needed
         });
 
         Schema::table('users', function (Blueprint $table) {
@@ -29,7 +26,6 @@ return new class extends Migration
             $table->integer('subject2')->nullable();
             $table->integer('subject3')->nullable();
             $table->boolean('grade_condition')->nullable();
-            // Add more subjects as needed
         });
     }
 
@@ -39,11 +35,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['confession1', 'confession2', 'confession3','attendance1', 'attendance2', 'attendance3',  'total_grade']);
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['subject1', 'subject2', 'subject3', 'grade_condition']);
+            $table->dropColumn([
+                'confession1', 'confession2', 'confession3',
+                'attendance1', 'attendance2', 'attendance3', 'total_grade',
+                'subject1', 'subject2', 'subject3', 'grade_condition'
+            ]);
         });
     }
 };

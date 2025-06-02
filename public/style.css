@@ -17,7 +17,7 @@
     --spacing-mid: 1rem;
     --spacing-large: 2rem;
     
-    --animation-time: 1s;
+    --animation-time: 2s;
     --transition-time: 0.5s;
     
     --text-shadow: 3px 3px 10px var(--background-dark);
@@ -90,7 +90,7 @@ nav {
     font-size: var(--font-mid-1);
     text-shadow: var(--text-shadow);
     position: relative;    
-    
+    animation: var(--animation-time) fadeIn;
 }
 
 .nav-links {
@@ -299,7 +299,7 @@ nav {
     padding: var(--spacing-large);
     flex: 1;
     min-height: 35vh;
-    transition: all calc(var(--animation-time)/2) ease;
+    transition: all 0.5s ease;
     border-radius: var(--border-radius-small);
 }
 
@@ -420,6 +420,16 @@ footer {
         opacity: 1; 
         transform: translateY(0); 
     }
+}
+
+@keyframes fadeIn {
+    0% { 
+        opacity: 0; 
+    }
+    100% { 
+        opacity: 1; 
+    }
+    
 }
 
 /* Auth page background */

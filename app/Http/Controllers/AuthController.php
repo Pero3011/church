@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,22 +19,38 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'year' => 'required|string|max:255',
-            'user_id' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'phone_number' => 'required|string|max:255|unique:users,phone_number|unique:admins,phone_number',
+            'email' => 'required|email|unique:users,email|unique:admins,email',
+            'password' => 'required|string|min:1|confirmed',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'year' => $request->year,
-            'user_id' => $request->user_id,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        if ($request->year === 'خادم') 
+        {
+            // Store in admins table
+            $admin = Admin::create([
+                'name' => $request->name,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            
+            // Optionally log in as admin (custom session)
+            session(['admin_name' => $admin->name, 'admin_id' => $admin->id]);
+            return redirect('/')->with('success', 'تم التسجيل كخادم بنجاح!');
+        } 
 
-        Auth::login($user);
-
-        return redirect('/')->with('success', 'تم التسجيل بنجاح!');
+        else {
+            // Store in users table
+            $user = User::create([
+                'name' => $request->name,
+                'year' => $request->year,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            Auth::login($user);
+            return redirect('/')->with('success', 'تم التسجيل بنجاح!');
+        }
     }
 
     public function showSignin()
@@ -45,6 +62,15 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        // Try to authenticate as admin first
+        $admin = \App\Models\Admin::where('email', $credentials['email'])->first();
+        if ($admin && \Illuminate\Support\Facades\Hash::check($credentials['password'], $admin->password)) {
+            // Set admin session
+            session(['admin_name' => $admin->name, 'admin_id' => $admin->id]);
+            return redirect('/')->with('success', 'تم تسجيل الدخول كخادم بنجاح');
+        }
+
+        // Try to authenticate as user
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect('/')->with('success', 'تم تسجيل الدخول بنجاح');

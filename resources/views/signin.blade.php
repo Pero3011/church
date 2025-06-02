@@ -22,8 +22,8 @@
         <form method="POST" action="{{ url('/signin') }}">
             @csrf
             <div>
-                <label>البريد الإلكتروني:</label>
-                <input type="email" name="email" value="{{ old('email') }}" required>
+                <label>رقم الهاتف:</label>
+                <input type="text" name="phone_number" value="{{ old('phone_number') }}" required>
             </div>
             <div>
                 <label>كلمة المرور:</label>
@@ -52,3 +52,4 @@ function togglePassword(fieldId, btn) {
 </script>
 </body>
 </html>
+

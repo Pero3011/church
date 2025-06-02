@@ -36,8 +36,8 @@
                 <input type="text" name="name" value="{{ old('name') }}" required>
             </div>
             <div>
-                <label>الرقم التعريفي:</label>
-                <input type="text" name="user_id" value="{{ old('user_id') }}" required>
+                <label>رقم الهاتف:</label>
+                <input type="text" name="phone_number" value="{{ old('phone_number') }}" required>
             </div>
             <div>
                 <label>البريد الإلكتروني:</label>
