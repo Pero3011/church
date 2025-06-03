@@ -9,7 +9,7 @@
 <body>
     @if(auth()->check() || session('admin_name'))
         <div class="parent">
-            <div class="container">
+            <div class="container" id="confession">
                 <h2 class="headline" style="padding-top:2rem;">جدول الدرجات والحضور الاعتراف</h2>
                 <table class="schedule-table">
                     <thead>
@@ -144,60 +144,52 @@
                         @if(session('admin_name')  && isset($users))
                             @foreach($users as $user)
                                 @php
-                                    $passed = !($total_grade < 80 || $subject1 < 60 || $subject2 < 60 || $subject3 < 60 || $confession1 < 2 || $confession2 < 2 || $confession3 < 2);
+                                    $total_grade = round(
+                                        (($user->attendance1 ?? 0) + ($user->attendance2 ?? 0) + ($user->attendance3 ?? 0)) / 90 * 100
+                                    );
+                                    $subject1 = $user->subject1 ?? 0;
+                                    $subject2 = $user->subject2 ?? 0;
+                                    $subject3 = $user->subject3 ?? 0;
+                                    $confession1 = $user->confession1 ?? 0;
+                                    $confession2 = $user->confession2 ?? 0;
+                                    $confession3 = $user->confession3 ?? 0;
+                                    $passed = !($total_grade < 80 || $subject1 < 40 || $subject2 < 40 || $subject3 < 40 || $confession1 < 2 || $confession2 < 2 || $confession3 < 2);
                                 @endphp
-                                <tr>
-                                    <td data-label="الحاله" class="الحاله">
-                                        @if($passed)
-                                            <span>ناجح</span>
-                                            <style>
-                                                tbody tr:last-child td {
-                                                    background-color: green;
-                                                    color: white;
-                                                    font-weight: bold;
-                                                }
-                                            </style>
-                                        @else
-                                            <span>غير ناجح</span>
-                                            <style>
-                                                tbody tr:last-child td 
-                                                {
-                                                    background-color: rgb(181, 0, 0);
-                                                    color: white;
-                                                    font-weight: bold;
-                                                }
-                                            </style>
-                                        @endif
+                                <tr class="condition">
+                                @if($passed)
+                                    <td data-label="الحاله" style="background-color: green" >
+                                        <span style="font-weight:bold; color: white; ">ناجح</span>
                                     </td>
+                                @else
+                                    <td data-label="الحاله" style="background-color: red">
+                                        <span style="font-weight:bold;color: white;">غير ناجح</span>
+                                    </td>
+                                @endif
                                 </tr>
                             @endforeach
                         @elseif(auth()->check() && isset($user))
                             @php
-                                $passed = !($total_grade < 80 || $subject1 < 60 || $subject2 < 60 || $subject3 < 60);
+                                $total_grade = round(
+                                    (($user->attendance1 ?? 0) + ($user->attendance2 ?? 0) + ($user->attendance3 ?? 0)) / 90 * 100
+                                );
+                                $subject1 = $user->subject1 ?? 0;
+                                $subject2 = $user->subject2 ?? 0;
+                                $subject3 = $user->subject3 ?? 0;
+                                $confession1 = $user->confession1 ?? 0;
+                                $confession2 = $user->confession2 ?? 0;
+                                $confession3 = $user->confession3 ?? 0;
+                                $passed = !($total_grade < 80 || $subject1 < 40 || $subject2 < 40 || $subject3 < 40 || $confession1 < 2 || $confession2 < 2 || $confession3 < 2);
                             @endphp
-                            <tr>
-                                <td data-label="الحاله" class="الحاله">
-                                    @if($passed)
-                                        <span>ناجح</span>
-                                            <style>
-                                                tbody .الحاله 
-                                                {
-                                                    background-color: green;
-                                                    color: white;
-                                                    font-weight: bold;
-                                                }
-                                            </style>
-                                    @else
-                                        <span style="font-weight:bold;">غير ناجح</span>
-                                        <style>
-                                            tbody  .الحاله{
-                                                background-color: rgb(181, 0, 0);
-                                                color: white;
-                                                font-weight: bold;
-                                            }
-                                        </style>
-                                    @endif
-                                </td>
+                            <tr class="condition">
+                                @if($passed)
+                                    <td data-label="الحاله" style="background-color: green" >
+                                        <span style="font-weight:bold; color: white; ">ناجح</span>
+                                    </td>
+                                @else
+                                    <td data-label="الحاله" style="background-color: red">
+                                        <span style="font-weight:bold;color: white;">غير ناجح</span>
+                                    </td>
+                                @endif
                             </tr>
                         @endif
                     </tbody>

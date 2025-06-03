@@ -22,8 +22,8 @@
         <form method="POST" action="{{ url('/signin') }}">
             @csrf
             <div>
-                <label>رقم الهاتف:</label>
-                <input type="text" name="phone_number" value="{{ old('phone_number') }}" required>
+                <label>الايميل :</label>
+                <input type="email" name="email" value="{{ old('email') }}" required>
             </div>
             <div>
                 <label>كلمة المرور:</label>

@@ -121,13 +121,13 @@
 
                 <article class="service-card">
                     <div class="service-icon">
-                        <i class="fa-solid fa-hands-praying" aria-hidden="true"></i>
+                        <i class="fa-solid fa-newspaper" aria-hidden="true"></i>
                     </div>
-                    <h3 class="service-title">الصلوات والقداسات</h3>
+                    <h3 class="service-title">الاخبار</h3>
                     <p class="service-description">
-                        جدول مواعيد الصلوات والقداسات الأسبوعية والسنوية، مع إمكانية الحصول على الكتب الطقسية ونصوص الصلوات
+                        هنا يمكنك معرفة كل ما هو جديد في الكنيسة من اخبار  تخص الكنيسة و الخدمه
                     </p>
-                    <a href="#" class="service-link">
+                    <a href="{{ route('news') }}" class="service-link">
                         المزيد من التفاصيل
                         <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                     </a>

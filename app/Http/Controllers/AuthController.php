@@ -60,11 +60,17 @@ class AuthController extends Controller
 
     public function signin(Request $request)
     {
+        // Validate email and password fields
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
         // Try to authenticate as admin first
-        $admin = \App\Models\Admin::where('email', $credentials['email'])->first();
-        if ($admin && \Illuminate\Support\Facades\Hash::check($credentials['password'], $admin->password)) {
+        $admin = Admin::where('email', $credentials['email'])->first();
+        if ($admin && Hash::check($credentials['password'], $admin->password)) {
             // Set admin session
             session(['admin_name' => $admin->name, 'admin_id' => $admin->id]);
             return redirect('/')->with('success', 'تم تسجيل الدخول كخادم بنجاح');
