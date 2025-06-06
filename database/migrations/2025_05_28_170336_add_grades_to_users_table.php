@@ -15,9 +15,11 @@ return new class extends Migration
             $table->integer('confession1')->nullable();
             $table->integer('confession2')->nullable();
             $table->integer('confession3')->nullable();
+            $table->integer('confession4')->nullable();
             $table->integer('attendance1')->nullable();
             $table->integer('attendance2')->nullable();
             $table->integer('attendance3')->nullable();
+            $table->integer('attendance4')->nullable();
             $table->integer('total_grade')->nullable();
         });
 
@@ -25,7 +27,7 @@ return new class extends Migration
             $table->integer('subject1')->nullable();
             $table->integer('subject2')->nullable();
             $table->integer('subject3')->nullable();
-            $table->boolean('grade_condition')->nullable();
+            $table->text('grade_condition')->nullable();
         });
     }
 

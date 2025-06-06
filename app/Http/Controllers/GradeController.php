@@ -6,8 +6,6 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
-use function Laravel\Prompts\alert;
-
 class GradeController extends Controller
 {
     public function index()

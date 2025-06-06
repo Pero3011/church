@@ -590,7 +590,7 @@ footer {
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-.news-item a {
+.news-item a .news-form{
     display: inline-block;
     margin-top: 0.5rem;
     color: var(--button-color, #780000);
@@ -604,7 +604,7 @@ footer {
     color: var(--title-color, #003049);
 }
 
-form[action*="news"] {
+.news-form{
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -649,7 +649,7 @@ form[action*="news"] textarea:focus {
     background: #fff;
 }
 
-form[action*="news"] button[type="submit"] {
+.news-form button[type="submit"] {
     background: var(--button-color, #780000);
     color: #fff;
     border: none;
@@ -987,4 +987,77 @@ form[action*="news"] button[type="submit"]:hover {
     align-items: center;
     /* margin-left: auto; */
     padding-right: 1rem;
+}
+
+.served-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    direction: rtl;
+}
+.served-table th, .served-table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e7ef;
+    font-size: 1.1rem;
+    color: var(--title-color, #003049);
+}
+.served-table th {
+    background: var(--button-color, #780000);
+    color: var(--text-color);
+    font-weight: bold;
+}
+.served-table tr:last-child td {
+    border-bottom: none;
+}
+
+.served-table a{
+    color: var(--button-color, #780000);
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Responsive Design for Served Table */
+@media (max-width: 992px) {
+    .served-table {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 12px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+        font-size: 1rem;
+    }
+    .served-table thead {
+        display: none;
+    }
+    .served-table tbody tr {
+        display: block;
+        margin-bottom: 1.5rem;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 1rem;
+    }
+    .served-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7rem 1rem;
+        border: none;
+        border-bottom: 1px solid #e0e7ef;
+        font-size: 1rem;
+        position: relative;
+        word-break: break-word;
+    }
+    .served-table td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--button-color, #780000);
+        flex-basis: 50%;
+        text-align: right;
+        padding-left: 1rem;
+    }
 }

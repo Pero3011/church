@@ -34,7 +34,8 @@
                     </button>
                 </div>
             </div>
-            <button type="submit">دخول</button>
+            <button type="submit" style="margin-bottom: 1rem">دخول</button>
+            <a href="/signup" style="color: #780000;" >تسجيل جديد</a>
         </form>
     </div>
 </div>

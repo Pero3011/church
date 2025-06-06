@@ -16,7 +16,7 @@
     <div class="container">
         <h2 class="headline" style="padding-top:2rem;">الاخبار</h2>
         @if (session('admin_name'))
-            <form method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data" class="news-form">>
                 @csrf
                 <label>العنوان:</label>
                 <input type="text" name="title" required>
@@ -46,6 +46,16 @@
                     @endif
                     @if($item->file)
                         <a href="{{ asset('storage/' . $item->file) }}" download>تحميل الملف</a>
+                    @endif
+                    @if(session('admin_name'))
+                        <div class="news-actions" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;">
+                            <a href="{{ route('news.edit', $item->id) }}" class="nav-btn"  style="background: #a30000; color:white ;font-size:12px">تعديل</a>
+                            <form action="{{ route('news.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="nav-btn" style="background: #a30000;" onclick="return confirm('هل أنت متأكد من حذف الخبر؟')">حذف</button>
+                            </form>
+                        </div>
                     @endif
                     <hr>
                 </div>

@@ -132,6 +132,22 @@
                         <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 </article>
+                @if (session('admin_name'))
+                    <article class="service-card">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-newspaper" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="service-title">ملف المخدومين</h3>
+                        <p class="service-description">
+                            هنا يمكنك معرفة كل ما هو جديد في الكنيسة من اخبار  تخص الكنيسة و الخدمه
+                        </p>
+                        <a href="{{ route('served') }}" class="service-link">
+                            المزيد من التفاصيل
+                            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                    </article>
+                @endif
+
             </div>
         </div>
     </section>

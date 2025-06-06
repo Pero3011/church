@@ -82,7 +82,7 @@ class AuthController extends Controller
             return redirect('/')->with('success', 'تم تسجيل الدخول بنجاح');
         }
 
-        return back()->withErrors(['email' => 'بيانات الدخول غير صحيحة']);
+        return back()->withErrors(['email' => 'بيانات الدخول غير صحيح أو غير موجودة ارجو المحاوله مره اخرى او تسجيل حساب جديد']);
     }
 
     public function logout(Request $request)
