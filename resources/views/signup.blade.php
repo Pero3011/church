@@ -30,7 +30,6 @@
                     <option value="الثانية" {{ old('year') == 'الثانية' ? 'selected' : '' }}>الثانية</option>
                 </select>
             </div>
-            
             <div>
                 <label>الاسم:</label>
                 <input type="text" name="name" value="{{ old('name') }}" required>

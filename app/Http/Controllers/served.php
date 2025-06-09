@@ -7,9 +7,13 @@ use App\Models\User;
 
 class served extends Controller
 {
-    public function showUsers()
+    public function showUsers(Request $request)
     {
-        $users = User::all(); // or your query
+        $query = User::query();
+        if ($request->filled('year')) {
+            $query->where('year', $request->year);
+        }
+        $users = $query->get();
         return view('served', compact('users'));
     }
 

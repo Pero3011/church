@@ -66,7 +66,7 @@ body {
 .parent {
     background-image: 
         linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-        url(../images/church.jpg);
+        url(../images/church-1.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -543,6 +543,7 @@ footer {
     background: var(--button-color, #780000);
     color: var(--text-color);
     font-weight: bold;
+    font-size: 16px;
 }
 
 .schedule-table tr:last-child td , .grades-table tr:last-child td {
@@ -1029,6 +1030,7 @@ form[action*="news"] button[type="submit"]:hover {
         border-radius: 12px;
         box-shadow: 0 2px 16px rgba(0,0,0,0.07);
         font-size: 1rem;
+        align-items: center;
     }
     .served-table thead {
         display: none;
@@ -1040,24 +1042,19 @@ form[action*="news"] button[type="submit"]:hover {
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         padding: 1rem;
+
     }
     .served-table td {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         padding: 0.7rem 1rem;
         border: none;
         border-bottom: 1px solid #e0e7ef;
         font-size: 1rem;
         position: relative;
-        word-break: break-word;
-    }
-    .served-table td:before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: var(--button-color, #780000);
-        flex-basis: 50%;
-        text-align: right;
-        padding-left: 1rem;
+        word-break: break-word;        
+        text-align: center;
     }
 }
+

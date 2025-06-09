@@ -23,67 +23,146 @@
     @if(auth()->check() || session('admin_name'))
         <div class="parent">
             <div class="container" id="confession">
-                <h2 class="headline" style="padding-top:2rem;">جدول الدرجات والحضور الاعتراف</h2>
-                <table class="schedule-table">
+                <h2 class="headline" style="padding-top:2rem;">جدول الدرجات والحضور و الاعتراف</h2>
+                <table class="grades-table">
                     <thead>
                         <tr>
-                            <th>الاسم</th>
-                            <th>الاعتراف (يناير - فبراير - مارس)</th>
-                            <th>الاعتراف (ابريل - مايو - يونيو)</th>
-                            <th>الاعتراف (يوليو - اغسطس - سبتمبر)</th>
-                            <th>الاعتراف (اكتوبر - نوفمبر - ديسمبر)</th>
+                            <th>الاسم</th>                            
+                            @if (\Carbon\Carbon::now()->month >= 1 && \Carbon\Carbon::now()->month <= 3)
+                                <th colspan="5" style="text-align: center;">الاعتراف (يناير - فبراير - مارس)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 4 && \Carbon\Carbon::now()->month <= 6)
+                                <th style="text-align: center;">الاعتراف (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الاعتراف (ابريل - مايو - يونيو)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 7 && \Carbon\Carbon::now()->month <= 9)
+                                <th style="text-align: center;">الاعتراف (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الاعتراف (ابريل - مايو - يونيو)</th>                            
+                                <th style="text-align: center;">الاعتراف (يوليو - اغسطس - سبتمبر)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 10 && \Carbon\Carbon::now()->month <= 12)
+                                <th style="text-align: center;">الاعتراف (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الاعتراف (ابريل - مايو - يونيو)</th>                            
+                                <th style="text-align: center;">الاعتراف (يوليو - اغسطس - سبتمبر)</th>                            
+                                <th style="text-align: center;">الاعتراف (اكتوبر - نوفمبر - ديسمبر)</th>
+                            @endif
                             <th>الحاله</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if(session('admin_name')  && isset($users))
                             @foreach($users as $user)
+                                @php
+                                    $confession1 = $user->confession1 ?? 0;
+                                    $confession2 = $user->confession2 ?? 0;
+                                    $confession3 = $user->confession3 ?? 0;
+                                    $confession4 = $user->confession4 ?? 0;
+                                    $status = '';
+                                    $color = '';
+                                    $month = \Carbon\Carbon::now()->month;
+                                @endphp
                                 <tr>
                                     <td data-label="الاسم">{{ $user->name }}</td>
-                                    <td data-label="الاعتراف 1">{{ $user->confession1 ?? '0' }}/3</td>
-                                    <td data-label="الاعتراف 2">{{ $user->confession2 ?? '0' }}/3</td>
-                                    <td data-label="الاعتراف 3">{{ $user->confession3 ?? '0' }}/3</td>
-                                    <td data-label="الاعتراف 4">{{ $user->confession4 ?? '0' }}/3</td>
-                                    @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2 || $confession4 < 2)
-                                        <td data-label="الحاله" style="color: red">
-                                            <span style="font-weight:bold;">غير ناجح</span>
-                                        </td>
+                                    @if ($month >= 1 && $month <= 3)
+                                        <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                        @if ($confession1 < 2)
+                                            <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                        @else
+                                            <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                        @endif
+                                    @elseif ($month >= 4 && $month <= 6)
+                                        <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                        <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                        @if ($confession1 < 2 || $confession2 < 2)
+                                            <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                        @else
+                                            <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                        @endif
+                                    @elseif ($month >= 7 && $month <= 9)
+                                        <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                        <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                        <td data-label="الاعتراف 3">{{ $confession3 }}/3</td>
+                                        <td></td>
+                                        @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2)
+                                            <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                        @else
+                                            <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                        @endif
                                     @else
-                                        <td data-label="الحاله" style="color: green">
-                                            <span style="font-weight:bold;">ناجح</span>
-                                        </td>
+                                        <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                        <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                        <td data-label="الاعتراف 3">{{ $confession3 }}/3</td>
+                                        <td data-label="الاعتراف 4">{{ $confession4 }}/3</td>
+                                        @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2 || $confession4 < 2)
+                                            <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                        @else
+                                            <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                        @endif
                                     @endif
                                 </tr>
                             @endforeach
                         @elseif(auth()->check() && isset($user))
                             <tr>
                                 <td data-label="الاسم">{{ $user->name }}</td>
-                                <td data-label="الاعتراف 1">{{ $user->confession1 ?? '0' }}/3</td>
-                                <td data-label="الاعتراف 2">{{ $user->confession2 ?? '0' }}/3</td>
-                                <td data-label="الاعتراف 3">{{ $user->confession3 ?? '0' }}/3</td>
-                                <td data-label="الاعتراف 4">{{ $user->confession4 ?? '0' }}/3</td>
-
-                                @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2 || $confession4 < 2)
-                                    <td data-label="الحاله" style="color: red">
-                                        <span style="font-weight:bold;">غير ناجح</span>
-                                    </td>
+                                @if ($month >= 1 && $month <= 3)
+                                    <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                    @if ($confession1 < 2)
+                                        <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                    @else
+                                        <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                    @endif
+                                @elseif ($month >= 4 && $month <= 6)
+                                    <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                    <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                    @if ($confession1 < 2 || $confession2 < 2)
+                                        <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                    @else
+                                        <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                    @endif
+                                @elseif ($month >= 7 && $month <= 9)
+                                    <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                    <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                    <td data-label="الاعتراف 3">{{ $confession3 }}/3</td>
+                                    <td></td>
+                                    @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2)
+                                        <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                    @else
+                                        <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                    @endif
                                 @else
-                                    <td data-label="الحاله" style="color: green">
-                                        <span style="font-weight:bold;">ناجح</span>
-                                    </td>
+                                    <td data-label="الاعتراف 1">{{ $confession1 }}/3</td>
+                                    <td data-label="الاعتراف 2">{{ $confession2 }}/3</td>
+                                    <td data-label="الاعتراف 3">{{ $confession3 }}/3</td>
+                                    <td data-label="الاعتراف 4">{{ $confession4 }}/3</td>
+                                    @if ($confession1 < 2 || $confession2 < 2 || $confession3 < 2 || $confession4 < 2)
+                                        <td data-label="الحاله" style="color: red"><span style="font-weight:bold;">غير ناجح</span></td>
+                                    @else
+                                        <td data-label="الحاله" style="color: green"><span style="font-weight:bold;">ناجح</span></td>
+                                    @endif
                                 @endif
                             </tr>
                         @endif
                     </tbody>
                 </table>
-                <table class="schedule-table">
+                <table class="grades-table">
+                    @php
+                        $month = \Carbon\Carbon::now()->month;
+                    @endphp
                     <thead>
                         <tr>
                             <th>الاسم</th>
-                            <th>الحضور (يناير - فبراير - مارس)</th>
-                            <th>الحضور (ابريل - مايو - يونيو)</th>
-                            <th>الحضور (يوليو - اغسطس - سبتمبر)</th>
-                            <th>الحضور (اكتوبر - نوفمبر - ديسمبر)</th>
+                            @if (\Carbon\Carbon::now()->month >= 1 && \Carbon\Carbon::now()->month <= 3)
+                                <th colspan="5" style="text-align: center;">الحضور (يناير - فبراير - مارس)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 4 && \Carbon\Carbon::now()->month <= 6)
+                                <th style="text-align: center;">الحضور (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الحضور (ابريل - مايو - يونيو)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 7 && \Carbon\Carbon::now()->month <= 9)
+                                <th style="text-align: center;">الحضور (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الحضور (ابريل - مايو - يونيو)</th>                            
+                                <th style="text-align: center;">الحضور (يوليو - اغسطس - سبتمبر)</th>
+                            @elseif (\Carbon\Carbon::now()->month >= 10 && \Carbon\Carbon::now()->month <= 12)
+                                <th style="text-align: center;">الحضور (يناير - فبراير - مارس)</th>
+                                <th style="text-align: center;">الحضور (ابريل - مايو - يونيو)</th>                            
+                                <th style="text-align: center;">الحضور (يوليو - اغسطس - سبتمبر)</th>                            
+                                <th style="text-align: center;">الحضور (اكتوبر - نوفمبر - ديسمبر)</th>
+                            @endif
                             <th>الحضور الكلي</th>
                         </tr>
                     </thead>
@@ -92,10 +171,21 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td data-label="الاسم">{{ $user->name }}</td>
-                                    <td data-label="الحضور 1">{{ $user->attendance1 ?? '0'}}</td>
-                                    <td data-label="الحضور 2">{{ $user->attendance2 ?? '0' }}</td>
-                                    <td data-label="الحضور 3">{{ $user->attendance3 ?? '0' }}</td>
-                                    <td data-label="الحضور 4">{{ $user->attendance4 ?? '0' }}</td>
+                                    @if ($month >= 1 && $month <= 3)
+                                        <td data-label="الحضور 1">{{ $user->attendance1 ?? '0'}}</td>
+                                    @elseif ($month >= 4 && $month <= 6)
+                                        <td data-label="الحضور 1">{{ $user->attendance1 ?? '0'}}</td>
+                                        <td data-label="الحضور 2">{{ $user->attendance2 ?? '0' }}</td>
+                                    @elseif ($month >= 7 && $month <= 9)
+                                        <td data-label="الحضور 1">{{ $user->attendance1 ?? '0'}}</td>
+                                        <td data-label="الحضور 2">{{ $user->attendance2 ?? '0' }}</td>
+                                        <td data-label="الحضور 3">{{ $user->attendance3 ?? '0' }}</td>
+                                    @else
+                                        <td data-label="الحضور 1">{{ $user->attendance1 ?? '0'}}</td>                                    
+                                        <td data-label="الحضور 2">{{ $user->attendance2 ?? '0' }}</td>
+                                        <td data-label="الحضور 3">{{ $user->attendance3 ?? '0' }}</td>
+                                        <td data-label="الحضور 4">{{ $user->attendance4 ?? '0' }}</td>
+                                    @endif
                                     <td data-label="الحضور الكلي">{{$total_grade}}%</td>
                                 </tr>
                             @endforeach

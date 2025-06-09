@@ -31,3 +31,4 @@ Route::put('/news/{news}', [NewsController::class, 'update'])->name('news.update
 Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
 Route::get('/served', [served::class, 'showUsers'])->name('served');
 Route::delete('/served/{user}', [served::class, 'destroy'])->name('user.destroy');
+Route::get('/served/{user}/edit', [served::class, 'index'])->name('user.update');
